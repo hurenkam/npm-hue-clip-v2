@@ -1,13 +1,12 @@
 const events = require('events');
 const EventSource = require('eventsource');
 const RestApi = require('./RestApi');
-
 const Resource = require('./Resource');
 
-const _error = require('debug')('error').extend('ClipApi');
-const _warn  = require('debug')('warn').extend('ClipApi');
-const _info  = require('debug')('info').extend('ClipApi');
-const _trace = require('debug')('trace').extend('ClipApi');
+const _error = require('debug')('error').extend('npm-hue-clip-v2').extend('ClipApi');
+const _warn = require('debug')('warn').extend('npm-hue-clip-v2').extend('ClipApi');
+const _info = require('debug')('info').extend('npm-hue-clip-v2').extend('ClipApi');
+const _trace = require('debug')('trace').extend('npm-hue-clip-v2').extend('ClipApi');
 
 class ClipApi extends events.EventEmitter {
     #restAPI;

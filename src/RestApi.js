@@ -2,10 +2,10 @@ const axios = require('axios');
 const https = require('https');
 const limiter = require('limiter');
 
-const _error = require('debug')('error').extend('RestApi');
-const _warn  = require('debug')('warn').extend('RestApi');
-const _info  = require('debug')('info').extend('RestApi');
-const _trace = require('debug')('trace').extend('RestApi');
+const _error = require('debug')('error').extend('npm-hue-clip-v2').extend('RestApi');
+const _warn = require('debug')('warn').extend('npm-hue-clip-v2').extend('RestApi');
+const _info = require('debug')('info').extend('npm-hue-clip-v2').extend('RestApi');
+const _trace = require('debug')('trace').extend('npm-hue-clip-v2').extend('RestApi');
 
 class RestApi {
     #ip;
