@@ -309,6 +309,28 @@ class ClipApi extends events.EventEmitter {
         return options;
     }
 
+    getSortedDeviceOptions() {
+        this.#trace("getSortedDeviceOptions()");
+
+        var options = [];
+        Object.values(this.#resources).forEach((resource)=>{
+            if (resource.rid() && resource.rtype() && (resource.services().length > 0) ) {
+                if (resource.rtype() == "device") {
+                    options.push({ value: resource.rid(), label: resource.name() });
+                }
+            }
+        });
+
+        options.sort(function (a, b) {
+            if (a.label > b.label) return 1;
+            if (a.label < b.label) return -1;
+            return 0;
+        });
+
+        this.#trace("getSortedDeviceOptions() options:",options);
+        return options;
+    }
+
     getSortedServiceOptions(uuid,rtype) {
         this.#trace("getSortedServiceOptions("+ uuid + "," + rtype + ")");
 
