@@ -314,10 +314,8 @@ class ClipApi extends events.EventEmitter {
 
         var options = [];
         Object.values(this.#resources).forEach((resource)=>{
-            if (resource.rid() && resource.rtype() && (resource.services().length > 0) ) {
-                if (resource.rtype() == "device") {
-                    options.push({ value: resource.rid(), label: resource.name() });
-                }
+            if (resource.rtype() == "device") {
+                options.push({ value: resource.rid(), label: resource.name() });
             }
         });
 
