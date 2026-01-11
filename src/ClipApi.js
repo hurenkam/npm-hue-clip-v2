@@ -113,33 +113,24 @@ class ClipApi extends events.EventEmitter {
 
     _processResources(response) {
         this.#info("_processResources()");
+        var instance = this;
 
         response.data.forEach((item) => {
-            this.#trace("constructor()  found resource:", item);
+            instance.#trace("constructor() found resource:", item);
 
             if (!this._isResourceRegistered(item.id)) {
                 var resource = new Resource(item,this);
-                this._registerResource(resource);
+                instance.#resources[resource.rid()] = resource;
             }
         });
 
-        this.#startQ.forEach(resource => resource.start(this.#resources[resource.rid()]));
+        this.#startQ.forEach(item => { item.start(item.id); });
         this.#isStarted = true;
-        this.#startQ = null;
+        this.#startQ = [];
     }
 
     _isResourceRegistered(uuid) {
         return Object.keys(this.#resources).includes(uuid);
-    }
-
-    _registerResource(resource) {
-        this.#trace("#registerResource(",resource.id(),")");
-        this.#resources[resource.rid()] = resource;
-    }
-
-    _unregisterResource(resource) {
-        this.#trace("#unregisterResource()");
-        delete(this.#resources[resource.rid()]);
     }
 
     _stopEventStream() {
@@ -152,12 +143,12 @@ class ClipApi extends events.EventEmitter {
         this.#eventSource = null;
     }
 
-    requestStartup(resource) {
-        this.#trace("requestStartup()");
+    requestResourceStartup(start,id) {
+        this.#trace("requestResourceStartup(",id,")");
         if (this.#isStarted) {
-            resource.start();
+            start(id);
         } else {
-            this.#startQ.push(resource);
+            this.#startQ.push({ start: start, id: id});
         }
     }
 
@@ -174,7 +165,7 @@ class ClipApi extends events.EventEmitter {
         var instance = this;
         Object.keys(this.#resources).forEach((id) => {
             var resource = instance.resource[id];
-            instance._unregisterResource(resource);
+            delete(this.#resources[resource.rid()]);
             resource.destructor();
         });
 
@@ -228,7 +219,6 @@ class ClipApi extends events.EventEmitter {
             return 0;
         });
 
-        //this.#trace("getSortedResourcesByTypeAndModel(",type,",",models,") options:",options);
         return result.filter(function(resource) {
             if (models) {
                 if ((resource.data().product_data) && (resource.data().product_data.model_id)) {
