@@ -1,6 +1,6 @@
 {
   "name": "@hurenkam/npm-hue-clip-v2",
-  "version": "0.0.1",
+  "version": "0.7.1",
   "description": "Functionality to access hue clip v2 api",
   "main": "src/index.js",
   "scripts": {
@@ -18,7 +18,7 @@
     "examples"
   ],
   "dependencies": {
-    "axios": "^1.1.3",
+    "axios": "^1.13.2",
     "debug": "^4.4.3",
     "eventsource": "^2.0.2",
     "limiter": "^2.1.0"
