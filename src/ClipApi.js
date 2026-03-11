@@ -319,6 +319,22 @@ class ClipApi extends events.EventEmitter {
         return options;
     }
 
+    getDeviceServices(uuid) {
+        this.#trace("getDeviceServices(" + uuid + ")");
+
+        var result = [];
+        var device = this.#resources[uuid];
+        if (device && device.services) {
+            var services = device.services();
+            Object.values(services).forEach((service) => {
+                result.push({ value: service.rid(), label: service.typeName() });
+            });
+        };
+
+        this.#trace("getDeviceServices() result:",result);
+        return result;
+    }
+
     getSortedServiceOptions(uuid,rtype) {
         this.#trace("getSortedServiceOptions("+ uuid + "," + rtype + ")");
 
