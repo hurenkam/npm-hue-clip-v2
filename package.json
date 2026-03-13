@@ -1,6 +1,6 @@
 {
   "name": "@hurenkam/npm-hue-clip-v2",
-  "version": "0.7.1",
+  "version": "0.0.2",
   "description": "Functionality to access hue clip v2 api",
   "main": "src/index.js",
   "scripts": {
